@@ -170,10 +170,9 @@ describe('feeds', () => {
                 done();
             });
         });
-        
-        
+
         it('should allow access if token is correct', (done) => {
-            rssToken = "f2a56c56-63c7-4580-b3bb-42a66e655f6e";
+            rssToken = 'f2a56c56-63c7-4580-b3bb-42a66e655f6e';
             request(`${nconf.get('url')}/category/${cid}.rss?uid=${fooUid}&token=${rssToken}`, { }, (err, res, body) => {
                 assert.ifError(err);
                 assert.equal(res.statusCode, 200);
