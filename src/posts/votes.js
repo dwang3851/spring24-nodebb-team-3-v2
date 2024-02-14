@@ -224,6 +224,10 @@ module.exports = function (Posts) {
     }
 
     async function adjustPostVotes(postData, uid, type, unvote) {
+        console.assert(typeof postData === 'object');
+        console.assert(typeof uid === 'number');
+        console.assert(typeof type === 'string');
+        console.assert(typeof unvote === 'boolean');
         const notType = (type === 'upvote' ? 'downvote' : 'upvote');
         if (unvote) {
             await db.setRemove(`pid:${postData.pid}:${type}`, uid);
@@ -238,7 +242,7 @@ module.exports = function (Posts) {
         ]);
         postData.upvotes = upvotes;
         postData.downvotes = downvotes;
-        postData.votes = postData.upvotes - postData.downvotes;
+        postData.votes = Math.max(postData.upvotes - postData.downvotes, 0);
         await Posts.updatePostVoteCount(postData);
     }
 
