@@ -91,6 +91,8 @@ function escapeTitle(topicData) {
 }
 
 function modifyTopic(topic, fields) {
+    console.assert(typeof topic === 'object');
+    console.assert(Array.isArray(fields));
     if (!topic) {
         return;
     }
@@ -120,7 +122,7 @@ function modifyTopic(topic, fields) {
     }
 
     if (topic.hasOwnProperty('upvotes') && topic.hasOwnProperty('downvotes')) {
-        topic.votes = topic.upvotes - topic.downvotes;
+        topic.votes = Math.max(0, topic.upvotes - topic.downvotes);
     }
 
     if (fields.includes('teaserPid') || !fields.length) {
