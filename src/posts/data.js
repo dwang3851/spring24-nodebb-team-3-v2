@@ -56,10 +56,12 @@ module.exports = function (Posts) {
 };
 
 function modifyPost(post, fields) {
+    console.assert(typeof post === 'object');
+    console.assert(Array.isArray(fields));
     if (post) {
         db.parseIntFields(post, intFields, fields);
         if (post.hasOwnProperty('upvotes') && post.hasOwnProperty('downvotes')) {
-            post.votes = post.upvotes - post.downvotes;
+            post.votes = Math.max(post.upvotes - post.downvotes, 0);
         }
         if (post.hasOwnProperty('timestamp')) {
             post.timestampISO = utils.toISOString(post.timestamp);

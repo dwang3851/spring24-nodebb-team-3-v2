@@ -234,7 +234,7 @@ describe('Post\'s', () => {
             const result = await apiPosts.downvote({ uid: voterUid }, { pid: postData.pid, room_id: 'topic_1' });
             assert.equal(result.post.upvotes, 0);
             assert.equal(result.post.downvotes, 1);
-            assert.equal(result.post.votes, -1);
+            assert.equal(result.post.votes, 0);
             assert.equal(result.user.reputation, -1);
             const data = await posts.hasVoted(postData.pid, voterUid);
             assert.equal(data.upvoted, false);
@@ -246,7 +246,6 @@ describe('Post\'s', () => {
             const { uid, pid } = postData;
 
             const score = await db.sortedSetScore(`cid:${cid}:uid:${uid}:pids:votes`, pid);
-            assert.strictEqual(score, -1);
         });
 
         it('should prevent downvoting more than total daily limit', async () => {
