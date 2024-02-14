@@ -646,6 +646,8 @@ describe('User', () => {
                         db.getObjectField(`user:${uid}`, 'password', next);
                     },
                 }, (err, results) => {
+                    // check return type of getUserData resolves
+                    assert.equal(typeof (userData), 'object');
                     assert.ifError(err);
                     Password.compare('newpassword', results.password, true, (err, match) => {
                         assert.ifError(err);

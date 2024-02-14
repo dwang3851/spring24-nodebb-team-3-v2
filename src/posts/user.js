@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const async = require('async');
 const validator = require('validator');
 const _ = require('lodash');
@@ -99,9 +100,18 @@ module.exports = function (Posts) {
         return groupsMap;
     }
 
+    // Type signature: async function getUserData(uids: Array<number>, uid: number) => Promise<UserData>
     async function getUserData(uids, uid) {
+        // Asserting function parameter types
+        // Arrays are considered objects in Javascript, so this is the only way to verify the type of uids
+        assert.equal(typeof (uids), 'object');
+        if (uids.length > 0) {
+            assert.equal(typeof (uids[0]), 'number');
+        }
+        assert.equal(typeof (uid), 'number');
+
         const fields = [
-            'uid', 'username', 'fullname', 'userslug',
+            'uid', 'username', 'fullname', 'accounttype', 'userslug',
             'reputation', 'postcount', 'topiccount', 'picture',
             'signature', 'banned', 'banned:expire', 'status',
             'lastonline', 'groupTitle', 'mutedUntil',
@@ -111,6 +121,7 @@ module.exports = function (Posts) {
             uid: uid,
             uids: uids,
         });
+        // Checks for function return types are in test/user.js
         return await user.getUsersFields(result.uids, _.uniq(result.fields));
     }
 
