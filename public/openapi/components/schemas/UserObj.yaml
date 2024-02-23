@@ -121,3 +121,7 @@ UserObj:
     banned_until_readable:
       type: string
       example: Not Banned
+    isStudent:
+      type: boolean
+      description: True if user is student, false otherwise
+      example: True

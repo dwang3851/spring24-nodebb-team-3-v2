@@ -49,9 +49,17 @@
 
 <br />
 
-<div class="content" component="post/content" itemprop="text">
-    {posts.content}
-</div>
+<!-- IF posts.user.isStudent-->
+    <div class="content" component="post/student-content" itemprop="text">
+        {posts.content}
+    </div>
+<!-- ENDIF posts.user.isStudent-->
+
+<!-- IF !posts.user.isStudent-->
+    <div class="content" component="post/teacher-content" itemprop="text">
+        {posts.content}
+    </div>
+<!-- ENDIF !posts.user.isStudent-->
 
 <div class="post-footer">
     {{{ if posts.user.signature }}}

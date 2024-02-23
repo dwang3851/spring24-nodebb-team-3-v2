@@ -50,6 +50,9 @@ MessageObject:
           type: string
           description: An URL-safe variant of the username (i.e. lower-cased, spaces removed, etc.)
           example: dragon-fruit
+        isStudent:
+          type: boolean
+          description: True if user is student, false otherwise
         picture:
           type: string
           nullable: true
@@ -113,6 +116,9 @@ RoomUserList:
             type: string
           status:
             type: string
+          isStudent:
+            type: boolean
+            description: True if user is student, false otherwise
           displayname:
             type: string
             description: This is either username or fullname depending on forum and user settings
@@ -157,6 +163,9 @@ RoomObjectFull:
                 type: string
               status:
                 type: string
+              isStudent:
+                type: boolean
+                description: True if user is student, false otherwise
               displayname:
                 type: string
                 description: This is either username or fullname depending on forum and user settings

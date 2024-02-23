@@ -117,6 +117,9 @@ FlagHistoryObject:
                 type: string
                 description: An URL-safe variant of the username (i.e. lower-cased, spaces
                   removed, etc.)
+              isStudent:
+                type: boolean
+                description: True if user is student, false otherwise
               picture:
                 nullable: true
               uid:
@@ -165,6 +168,9 @@ FlagNotesObject:
                 type: string
                 description: An URL-safe variant of the username (i.e. lower-cased, spaces
                   removed, etc.)
+              isStudent:
+                type: boolean
+                description: True if user is student, false otherwise
               picture:
                 type: string
               uid:

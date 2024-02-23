@@ -59,6 +59,8 @@ TopicObject:
               nullable: true
             banned:
               type: number
+            isStudent:
+              type: boolean
             status:
               type: string
             icon:text:

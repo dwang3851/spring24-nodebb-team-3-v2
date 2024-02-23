@@ -20,7 +20,7 @@ const intFields = [
 
 module.exports = function (User) {
     const fieldWhitelist = [
-        'uid', 'username', 'userslug', 'email', 'email:confirmed', 'joindate', 'accounttype',
+        'uid', 'username', 'userslug', 'email', 'email:confirmed', 'joindate', 'accounttype', 'isStudent',
         'lastonline', 'picture', 'icon:bgColor', 'fullname', 'location', 'birthday', 'website',
         'aboutme', 'signature', 'uploadedpicture', 'profileviews', 'reputation',
         'postcount', 'topiccount', 'lastposttime', 'banned', 'banned:expire',
@@ -78,6 +78,7 @@ module.exports = function (User) {
             if (uniqueUids[index] > 0 && !user.uid) {
                 user.oldUid = uniqueUids[index];
             }
+            user.isStudent = user.accounttype === 'student';
         });
         await modifyUserData(result.users, fields, fieldsToRemove);
         return uidsToUsers(uids, uniqueUids, result.users);
