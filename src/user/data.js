@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const validator = require('validator');
 const nconf = require('nconf');
 const _ = require('lodash');
@@ -44,10 +45,17 @@ module.exports = function (User) {
         'email:confirmed': 0,
     };
 
+    // Type signature: async function getUserFields(uids: Array<string>,
+    //                                              fields: Array<string>) => Array<UserData>
     User.getUsersFields = async function (uids, fields) {
         if (!Array.isArray(uids) || !uids.length) {
             return [];
         }
+        // Asserting function parameter types
+        //uids and fields are both arrays that have items that can take on multiple types
+        //so there is no way to write asserts for them
+        assert.equal(typeof (uids), 'object');
+        assert.equal(typeof (fields), 'object');
 
         uids = uids.map(uid => (isNaN(uid) ? 0 : parseInt(uid, 10)));
 
