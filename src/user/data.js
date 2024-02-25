@@ -52,8 +52,8 @@ module.exports = function (User) {
             return [];
         }
         // Asserting function parameter types
-        //uids and fields are both arrays that have items that can take on multiple types
-        //so there is no way to write asserts for them
+        // uids and fields are both arrays that have items that can take on multiple types
+        // so there is no way to write asserts for them
         assert.equal(typeof (uids), 'object');
         assert.equal(typeof (fields), 'object');
 

@@ -83,7 +83,7 @@ describe('User', () => {
 
         it('should be created properly', async () => {
             const email = '<h1>test</h1>@gmail.com';
-            const uid = await User.create({ username: 'weirdemail', email: email});
+            const uid = await User.create({ username: 'weirdemail', email: email });
             const data = await User.getUserData(uid);
 
             const validationPending = await User.email.isValidationPending(uid, email);
@@ -158,21 +158,21 @@ describe('User', () => {
 
         it('should create student account properly', async () => {
             const email = '<h1>test</h1>@gmail.com';
-            const uid = await User.create({ username: 'weirdemail', email: email, accounttype: 'student'});
+            const uid = await User.create({ username: 'weirdemail', email: email, accounttype: 'student' });
             const userData = await User.getUsersFields([uid], ['accounttype', 'isStudent']);
             // make sure accounttype is stored
             assert.equal(userData[0].accounttype, 'student');
-            //make sure isStudent is set
+            // make sure isStudent is set
             assert.equal(userData[0].isStudent, true);
         });
 
         it('should create instructor account properly', async () => {
             const email = '<h1>test</h1>@gmail.com';
-            const uid = await User.create({ username: 'weirdemail', email: email, accounttype: 'instructor'});
+            const uid = await User.create({ username: 'weirdemail', email: email, accounttype: 'instructor' });
             const userData = await User.getUsersFields([uid], ['accounttype', 'isStudent']);
             // make sure accounttype is stored
             assert.equal(userData[0].accounttype, 'instructor');
-            //make sure isStudent is set peroperly
+            // make sure isStudent is set peroperly
             assert.equal(userData[0].isStudent, false);
         });
 
