@@ -186,8 +186,10 @@ module.exports = function (Posts) {
             await db.sortedSetAdd(`uid:${uid}:downvote`, now, pid);
         }
 
-        const postData = await Posts.getPostFields(pid, ['pid', 'uid', 'tid']);
-        const newReputation = await user.incrementUserReputationBy(postData.uid, type === 'upvote' ? 1 : -1);
+        const postData = await Posts.getPostFields(pid, ['pid', 'uid', 'tid', 'toPid', 'upvotes']);
+        const parentPostData = await Posts.getPostFields(postData.toPid, ['uid']);
+        let jmp = parentPostData.uid == uid ? 5 : 1;
+        const newReputation = await user.incrementUserReputationBy(postData.uid, type === 'upvote' ? jmp : -jmp);
 
         await adjustPostVotes(postData, uid, type, unvote);
 
