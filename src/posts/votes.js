@@ -168,6 +168,11 @@ module.exports = function (Posts) {
     }
 
     async function vote(type, unvote, pid, uid, voteStatus) {
+        console.assert(typeof type === 'string');
+        console.assert(typeof unvote === 'boolean');
+        console.assert(typeof pid === 'number');
+        console.assert(typeof uid === 'number');
+        console.assert(typeof voteStatus === 'object');
         uid = parseInt(uid, 10);
         if (uid <= 0) {
             throw new Error('[[error:not-logged-in]]');
@@ -186,8 +191,10 @@ module.exports = function (Posts) {
             await db.sortedSetAdd(`uid:${uid}:downvote`, now, pid);
         }
 
-        const postData = await Posts.getPostFields(pid, ['pid', 'uid', 'tid']);
-        const newReputation = await user.incrementUserReputationBy(postData.uid, type === 'upvote' ? 1 : -1);
+        const postData = await Posts.getPostFields(pid, ['pid', 'uid', 'tid', 'toPid', 'upvotes']);
+        const parentPostData = await Posts.getPostFields(postData.toPid, ['uid']);
+        const jmp = parentPostData.uid === uid ? 5 : 1;
+        const newReputation = await user.incrementUserReputationBy(postData.uid, type === 'upvote' ? jmp : -jmp);
 
         await adjustPostVotes(postData, uid, type, unvote);
 
