@@ -111,7 +111,7 @@ module.exports = function (Posts) {
         assert.equal(typeof (uid), 'number');
 
         const fields = [
-            'uid', 'username', 'fullname', 'accounttype', 'userslug',
+            'uid', 'username', 'fullname', 'accounttype', 'isStudent', 'userslug',
             'reputation', 'postcount', 'topiccount', 'picture',
             'signature', 'banned', 'banned:expire', 'status',
             'lastonline', 'groupTitle', 'mutedUntil',

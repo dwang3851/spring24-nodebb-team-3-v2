@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const validator = require('validator');
 const nconf = require('nconf');
 const _ = require('lodash');
@@ -20,7 +21,7 @@ const intFields = [
 
 module.exports = function (User) {
     const fieldWhitelist = [
-        'uid', 'username', 'userslug', 'email', 'email:confirmed', 'joindate', 'accounttype',
+        'uid', 'username', 'userslug', 'email', 'email:confirmed', 'joindate', 'accounttype', 'isStudent',
         'lastonline', 'picture', 'icon:bgColor', 'fullname', 'location', 'birthday', 'website',
         'aboutme', 'signature', 'uploadedpicture', 'profileviews', 'reputation',
         'postcount', 'topiccount', 'lastposttime', 'banned', 'banned:expire',
@@ -44,10 +45,17 @@ module.exports = function (User) {
         'email:confirmed': 0,
     };
 
+    // Type signature: async function getUserFields(uids: Array<string>,
+    //                                              fields: Array<string>) => Array<UserData>
     User.getUsersFields = async function (uids, fields) {
         if (!Array.isArray(uids) || !uids.length) {
             return [];
         }
+        // Asserting function parameter types
+        // uids and fields are both arrays that have items that can take on multiple types
+        // so there is no way to write asserts for them
+        assert.equal(typeof (uids), 'object');
+        assert.equal(typeof (fields), 'object');
 
         uids = uids.map(uid => (isNaN(uid) ? 0 : parseInt(uid, 10)));
 
@@ -78,6 +86,7 @@ module.exports = function (User) {
             if (uniqueUids[index] > 0 && !user.uid) {
                 user.oldUid = uniqueUids[index];
             }
+            user.isStudent = user.accounttype === 'student';
         });
         await modifyUserData(result.users, fields, fieldsToRemove);
         return uidsToUsers(uids, uniqueUids, result.users);

@@ -29,6 +29,10 @@ UserObject:
       type: string
       description: Type of the user account
       example: student
+    isStudent:
+      type: boolean
+      description: True if user is student, false otherwise
+      example: True
     lastonline:
       type: number
       description: A UNIX timestamp representing the moment the user was last recorded online on this site
@@ -228,6 +232,10 @@ UserObjectFull:
       type: string
       description: Type of the user account
       example: student
+    isStudent:
+      type: boolean
+      description: True if user is student, false otherwise
+      example: True
     lastonline:
       type: number
       description: A UNIX timestamp representing the moment the user was last recorded online on this site
@@ -569,6 +577,10 @@ UserObjectSlim:
       type: string
       description: Type of the user account
       example: student
+    isStudent:
+      type: boolean
+      description: True if user is student, false otherwise
+      example: True
     'icon:text':
       type: string
       description: A single-letter representation of a username. This is used in the auto-generated icon given to users without an avatar
@@ -625,6 +637,10 @@ UserObjectACP:
       type: string
       description: Type of the user account
       example: student
+    isStudent:
+      type: boolean
+      description: True if user is student, false otherwise
+      example: True
     banned:
       type: number
       description: A Boolean representing whether a user is banned or not
