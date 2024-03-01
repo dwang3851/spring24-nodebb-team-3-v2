@@ -23,3 +23,12 @@
 - The function upvote and vote are tested.
 - This functionality was previously not tested, and I orchestrated a post and reply in the test.
 - Additional type checks are added for the vote function.
+
+  
+## Latex Posting
+
+- This new feature will be applied to all posts. If the users typed in post/comment matches the regex for block or inline LaTeX rendering, then their post will upload with corresponding latex images.
+- To test this feature, you could try making a post using LaTeX syntax with double $ or single $ around your LaTeX code.
+- Additional tests can be found in test/posts.js file.
+- I added functions to validate renderings for the two types of regexes.
+- Additional type checks for parsing function were added.
