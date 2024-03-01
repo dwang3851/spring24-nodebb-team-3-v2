@@ -162,6 +162,17 @@ describe('Post\'s', () => {
     });
 
     describe('voting', () => {
+        it('should increase reputation by more since upvote from original poster', async () => {
+            const postResult = await topics.post({ uid: 1, cid: cid, title: 'change owner', content: 'original post' });
+            const p1 = await topics.reply({
+                uid: 2,
+                tid: postResult.topicData.tid,
+                content: 'raw content',
+            });
+            const result = await apiPosts.upvote({ uid: 1 }, { pid: p1.pid, room_id: 'topic_1' });
+            assert(result.user.reputation, 2);
+        });
+
         it('should fail to upvote post if group does not have upvote permission', async () => {
             await privileges.categories.rescind(['groups:posts:upvote', 'groups:posts:downvote'], cid, 'registered-users');
             let err;
@@ -185,7 +196,7 @@ describe('Post\'s', () => {
             assert.equal(result.post.upvotes, 1);
             assert.equal(result.post.downvotes, 0);
             assert.equal(result.post.votes, 1);
-            assert.equal(result.user.reputation, 1);
+            assert.equal(result.user.reputation, 2);
             const data = await posts.hasVoted(postData.pid, voterUid);
             assert.equal(data.upvoted, true);
             assert.equal(data.downvoted, false);
@@ -224,7 +235,7 @@ describe('Post\'s', () => {
             assert.equal(result.post.upvotes, 0);
             assert.equal(result.post.downvotes, 0);
             assert.equal(result.post.votes, 0);
-            assert.equal(result.user.reputation, 0);
+            assert.equal(result.user.reputation, 1);
             const data = await posts.hasVoted(postData.pid, voterUid);
             assert.equal(data.upvoted, false);
             assert.equal(data.downvoted, false);
@@ -235,7 +246,7 @@ describe('Post\'s', () => {
             assert.equal(result.post.upvotes, 0);
             assert.equal(result.post.downvotes, 1);
             assert.equal(result.post.votes, 0);
-            assert.equal(result.user.reputation, -1);
+            assert.equal(result.user.reputation, 0);
             const data = await posts.hasVoted(postData.pid, voterUid);
             assert.equal(data.upvoted, false);
             assert.equal(data.downvoted, true);
