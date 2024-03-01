@@ -9,7 +9,7 @@
   increase in reputation. Also, upvote using an unrelated account and see that the reputation increases the
   normal amount. Do the same with a reply to a reply and other variants for more exhaustiveness.
 - I added an automated test to see that reputation does increase more in the aforementioned scenario. This can
-  be found in the test/posts.js file.
+  be found in the test/posts.js file. I updated existing tests to reflect new changes to reputation in the same file.
 - The function upvote and vote are tested.
 - This functionality was previously not tested, and I orchestrated a post and reply in the test.
 - Additional type checks are added for the vote function.
