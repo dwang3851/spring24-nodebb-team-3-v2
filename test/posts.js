@@ -162,6 +162,17 @@ describe('Post\'s', () => {
     });
 
     describe('voting', () => {
+        it('should increase reputation by more since upvote from original poster', async () => {
+            const postResult = await topics.post({ uid: 1, cid: cid, title: 'change owner', content: 'original post' });
+            const p1 = await topics.reply({
+                uid: 2,
+                tid: postResult.topicData.tid,
+                content: 'raw content',
+            });
+            const result = await apiPosts.upvote({ uid: 1 }, { pid: p1.pid, room_id: 'topic_1' });
+            assert(result.user.reputation, 2);
+        });
+
         it('should fail to upvote post if group does not have upvote permission', async () => {
             await privileges.categories.rescind(['groups:posts:upvote', 'groups:posts:downvote'], cid, 'registered-users');
             let err;
@@ -1119,17 +1130,6 @@ describe('Post\'s', () => {
             assert.strictEqual(postData[0].data.content, 'the moved queued post');
             assert.strictEqual(postData[0].data.tid, result2.tid);
         });
-    });
-
-    it('should increase reputation by more since upvote from original poster', async () => {
-        const postResult = await topics.post({ uid: 1, cid: cid, title: 'change owner', content: 'original post' });
-        const p1 = await topics.reply({
-            uid: 2,
-            tid: postResult.topicData.tid,
-            content: 'raw content',
-        });
-        const result = await apiPosts.upvote({ uid: 1 }, { pid: p1.pid, room_id: 'topic_1' });
-        assert(result.user.reputation, 2);
     });
 
     describe('Topic Backlinks', () => {
