@@ -25,7 +25,7 @@
 - Additional type checks are added for the vote function.
 
   
-## Latex Posting
+## Latex Posting (Does not currently work in live deployment)
 
 - This new feature will be applied to all posts. If the users typed in post/comment matches the regex for block or inline LaTeX rendering, then their post will upload with corresponding latex images.
 - To test this feature, you could try making a post using LaTeX syntax with double $ or single $ around your LaTeX code.
