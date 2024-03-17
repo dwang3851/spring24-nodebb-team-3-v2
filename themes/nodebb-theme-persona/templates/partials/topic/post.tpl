@@ -49,17 +49,17 @@
 
 <br />
 
-<!-- IF posts.user.isStudent-->
-    <div class="content" component="post/student-content" itemprop="text">
+<div class="content" component="post/content" itemprop="text">
         {posts.content}
-    </div>
-<!-- ENDIF posts.user.isStudent-->
-
-<!-- IF !posts.user.isStudent-->
-    <div class="content" component="post/teacher-content" itemprop="text">
-        {posts.content}
-    </div>
-<!-- ENDIF !posts.user.isStudent-->
+        {{{if !posts.isEnglish }}}
+        <div class="sensitive-content-message">
+        <a class="btn btn-sm btn-primary view-original-btn">Click here to view the translated message.</a>
+        </div>
+        <div class="original-content" style="display:none;">
+        {posts.translatedContent}
+        </div>
+        {{{end}}}
+</div>
 
 <div class="post-footer">
     {{{ if posts.user.signature }}}
