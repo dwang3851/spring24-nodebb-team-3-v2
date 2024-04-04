@@ -436,18 +436,18 @@ describe("API", async () => {
                             );
 
                             switch (param.in) {
-                                case "path":
-                                    testPath = testPath.replace(
-                                        `{${param.name}}`,
-                                        param.example,
-                                    );
-                                    break;
-                                case "header":
-                                    headers[param.name] = param.example;
-                                    break;
-                                case "query":
-                                    qs[param.name] = param.example;
-                                    break;
+                            case "path":
+                                testPath = testPath.replace(
+                                    `{${param.name}}`,
+                                    param.example,
+                                );
+                                break;
+                            case "header":
+                                headers[param.name] = param.example;
+                                break;
+                            case "query":
+                                qs[param.name] = param.example;
+                                break;
                             }
                         });
                     }
@@ -707,77 +707,77 @@ describe("API", async () => {
                 );
 
                 switch (schema[prop].type) {
-                    case "string":
-                        assert.strictEqual(
-                            typeof response[prop],
-                            "string",
-                            `"${prop}" was expected to be a string, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
-                        );
-                        break;
-                    case "boolean":
-                        assert.strictEqual(
-                            typeof response[prop],
-                            "boolean",
-                            `"${prop}" was expected to be a boolean, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
-                        );
-                        break;
-                    case "object":
-                        assert.strictEqual(
-                            typeof response[prop],
-                            "object",
-                            `"${prop}" was expected to be an object, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
-                        );
-                        compare(
-                            schema[prop],
-                            response[prop],
-                            method,
-                            path,
-                            context ? [context, prop].join(".") : prop,
-                        );
-                        break;
-                    case "array":
-                        assert.strictEqual(
-                            Array.isArray(response[prop]),
-                            true,
-                            `"${prop}" was expected to be an array, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
-                        );
+                case "string":
+                    assert.strictEqual(
+                        typeof response[prop],
+                        "string",
+                        `"${prop}" was expected to be a string, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
+                    );
+                    break;
+                case "boolean":
+                    assert.strictEqual(
+                        typeof response[prop],
+                        "boolean",
+                        `"${prop}" was expected to be a boolean, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
+                    );
+                    break;
+                case "object":
+                    assert.strictEqual(
+                        typeof response[prop],
+                        "object",
+                        `"${prop}" was expected to be an object, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
+                    );
+                    compare(
+                        schema[prop],
+                        response[prop],
+                        method,
+                        path,
+                        context ? [context, prop].join(".") : prop,
+                    );
+                    break;
+                case "array":
+                    assert.strictEqual(
+                        Array.isArray(response[prop]),
+                        true,
+                        `"${prop}" was expected to be an array, but was ${typeof response[prop]} instead (path: ${method} ${path}, context: ${context})`,
+                    );
 
-                        if (schema[prop].items) {
-                            // Ensure the array items have a schema defined
-                            assert(
-                                schema[prop].items.type ||
+                    if (schema[prop].items) {
+                        // Ensure the array items have a schema defined
+                        assert(
+                            schema[prop].items.type ||
                                     schema[prop].items.allOf,
-                                `"${prop}" is defined to be an array, but its items have no schema defined (path: ${method} ${path}, context: ${context})`,
-                            );
+                            `"${prop}" is defined to be an array, but its items have no schema defined (path: ${method} ${path}, context: ${context})`,
+                        );
 
-                            // Compare types
-                            if (
-                                schema[prop].items.type === "object" ||
+                        // Compare types
+                        if (
+                            schema[prop].items.type === "object" ||
                                 Array.isArray(schema[prop].items.allOf)
-                            ) {
-                                response[prop].forEach((res) => {
-                                    compare(
-                                        schema[prop].items,
-                                        res,
-                                        method,
-                                        path,
-                                        context
-                                            ? [context, prop].join(".")
-                                            : prop,
-                                    );
-                                });
-                            } else if (response[prop].length) {
-                                // for now
-                                response[prop].forEach((item) => {
-                                    assert.strictEqual(
-                                        typeof item,
-                                        schema[prop].items.type,
-                                        `"${prop}" should have ${schema[prop].items.type} items, but found ${typeof items} instead (path: ${method} ${path}, context: ${context})`,
-                                    );
-                                });
-                            }
+                        ) {
+                            response[prop].forEach((res) => {
+                                compare(
+                                    schema[prop].items,
+                                    res,
+                                    method,
+                                    path,
+                                    context
+                                        ? [context, prop].join(".")
+                                        : prop,
+                                );
+                            });
+                        } else if (response[prop].length) {
+                            // for now
+                            response[prop].forEach((item) => {
+                                assert.strictEqual(
+                                    typeof item,
+                                    schema[prop].items.type,
+                                    `"${prop}" should have ${schema[prop].items.type} items, but found ${typeof items} instead (path: ${method} ${path}, context: ${context})`,
+                                );
+                            });
                         }
-                        break;
+                    }
+                    break;
                 }
             }
         });
