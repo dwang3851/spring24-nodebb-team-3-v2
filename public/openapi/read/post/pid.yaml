@@ -16,4 +16,18 @@ get:
       content:
         text/plain:
           schema:
-            type: string
+            type: object
+            properties:
+              pid:
+                type: string
+              content:
+                type: string
+              timestamp:
+                type: number
+              isEnglish:
+                type: boolean
+                nullable: true
+              translatedContent:
+                type: string
+                nullable: true
+
