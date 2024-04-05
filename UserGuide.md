@@ -22,7 +22,7 @@
   be found in the test/posts.js file. I updated existing tests to reflect new changes to reputation in the same file.
 - The function upvote and vote are tested.
 - This functionality was previously not tested, and I orchestrated a post and reply in the test.
-- Additional type checks are added for the vote function.
+- Additional type checks are added for the vote functions.
 
   
 ## Latex Posting (Does not currently work in live deployment)
